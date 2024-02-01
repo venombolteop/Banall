@@ -5,7 +5,9 @@ import sys
 import asyncio
 from telethon import TelegramClient, events
 from telethon.tl import functions
-from telethon.tl.functions.channels import LeaveChannelRequest, GetFullChannel
+from telethon.tl.functions.channels import LeaveChannelRequest
+from telethon.tl.functions.channels import GetFullChannel
+
 from telethon.tl.functions.messages import GetDialogs
 from telethon.tl.types import InputPeerEmpty, ChatBannedRights, ChannelParticipantsAdmins, EditBannedRequest
 from datetime import datetime
