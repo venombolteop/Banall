@@ -4,12 +4,30 @@ import os
 import sys
 import asyncio
 from telethon import TelegramClient, events
+import telethon.utils
 from telethon.tl import functions
 from telethon.tl.functions.channels import LeaveChannelRequest
-from telethon.tl.types import InputPeerEmpty, ChatBannedRights, ChannelParticipantsAdmins, EditBannedRequest
+from asyncio import sleep
+from telethon.tl.types import ChatBannedRights, ChannelParticipantsAdmins, ChatAdminRights
+from telethon.tl.functions.channels import EditBannedRequest
 from datetime import datetime
+from var import Var
 from time import sleep
 from telethon.errors.rpcerrorlist import FloodWaitError
+from telethon.tl import functions
+from telethon.tl.types import (
+    ChannelParticipantsAdmins,
+    ChannelParticipantsKicked,
+    ChatBannedRights,
+    UserStatusEmpty,
+    UserStatusLastMonth,
+    UserStatusLastWeek,
+    UserStatusOffline,
+    UserStatusOnline,
+    UserStatusRecently,
+)
+
+
 
 RIGHTS = ChatBannedRights(
     until_date=None,
