@@ -6,10 +6,6 @@ import asyncio
 from telethon import TelegramClient, events
 from telethon.tl import functions
 from telethon.tl.functions.channels import LeaveChannelRequest
-from telethon.tl.functions.channels import GetChat
-
-
-from telethon.tl.functions.messages import GetDialogs
 from telethon.tl.types import InputPeerEmpty, ChatBannedRights, ChannelParticipantsAdmins, EditBannedRequest
 from datetime import datetime
 from time import sleep
@@ -37,51 +33,6 @@ SUDO_USERS = []
 for x in Var.SUDO:
     SUDO_USERS.append(x)
 
-
-async def get_bot_stats(client, event):
-    total_users = 0
-    total_groups = 0
-    total_banned = 0
-
-    # Get all dialogs
-    dialogs = await client(GetDialogs(
-        offset_date=None,
-        offset_id=0,
-        offset_peer=InputPeerEmpty(),
-        limit=10,
-        hash=0
-    ))
-
-    for dialog in dialogs.dialogs:
-        if hasattr(dialog.peer, 'chat_id'):
-            # Get the full chat information
-            chat_info = await client(GetChat(dialog.peer.chat_id))
-            full_chat = chat_info.full_chat
-            total_groups += 1
-
-            # Count members in the group
-            if hasattr(full_chat.full_chat, 'participants_count'):
-                total_users += full_chat.full_chat.participants_count
-
-    # Fetch banned users count
-    me = await client.get_me()
-    bot_username = me.username
-    banned_users = await client.get_participants(bot_username, filter='banned')
-    total_banned = len(banned_users)
-
-    stats_message = (
-        f"👥 Total Users: {total_users}\n"
-        f"👥 Total Groups: {total_groups}\n"
-        f"🚫 Total Banned Users: {total_banned}"
-    )
-
-    await event.respond(stats_message)
-
-
-@Ayu.on(events.NewMessage(pattern='/stats'))
-async def stats_command_handler(event):
-    if event.sender_id in SUDO_USERS:
-        await get_bot_stats(Ayu, event)
 
 
 @Ayu.on(events.NewMessage(pattern="^/ping"))
