@@ -1,0 +1,35 @@
+{
+   "name": "Ban All Bot",
+   "description": "Telegram Bot",
+   "repository": "https://github.com/venombolteop/Banall",
+   "logo": "https://te.legra.ph/file/0b373de1c657129297c39.jpg",
+   "image": "heroku/python",
+   "env": {
+      "API_ID": {
+        "description": "Fill Api ID Take this value from My.telegram.org",
+        "value": "",
+        "required": true
+      },
+      "API_HASH": {
+        "description": "Fill Api hash Take this value from My.telegram.org",
+        "value": "",
+        "required": true
+      },
+      "BOT_TOKEN": {
+        "description": "Bot Token",
+        "value": "",
+        "required": true
+      },      
+      "SUDO": {
+            "description": "Sudo users id space by space",
+            "value": "",
+            "required": true  
+      }
+   },
+   "formation": {
+            "worker": {
+                "quantity": 1,
+                "size": "eco"
+            }
+        }
+  }
