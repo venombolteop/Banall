@@ -6,7 +6,8 @@ import asyncio
 from telethon import TelegramClient, events
 from telethon.tl import functions
 from telethon.tl.functions.channels import LeaveChannelRequest
-from telethon.tl.functions.channels import GetFullChannel
+from telethon.tl.functions.channels import GetChat
+
 
 from telethon.tl.functions.messages import GetDialogs
 from telethon.tl.types import InputPeerEmpty, ChatBannedRights, ChannelParticipantsAdmins, EditBannedRequest
@@ -54,7 +55,8 @@ async def get_bot_stats(client, event):
     for dialog in dialogs.dialogs:
         if hasattr(dialog.peer, 'chat_id'):
             # Get the full chat information
-            full_chat = await client(GetFullChannel(dialog.peer.chat_id))
+            chat_info = await client(GetChat(dialog.peer.chat_id))
+            full_chat = chat_info.full_chat
             total_groups += 1
 
             # Count members in the group
