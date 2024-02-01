@@ -8,7 +8,6 @@
 - unbanall
 - kickall
 - leave 
-- stats
 - restart
 
 # Deploy To Heroku 🚀
