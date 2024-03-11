@@ -70,7 +70,7 @@ async def ping(e):
 @Ayu.on(events.NewMessage(pattern='/start'))
 async def start_command(event):
     # Send a picture and start message
-    await event.reply_photo(
+    await event.reply(
         file='https://te.legra.ph/file/310a7fad596b00513692a.jpg',  # Replace with your image URL
         caption=(
             "Welcome to the Ban All Bot!\n"
