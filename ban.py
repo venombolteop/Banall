@@ -67,20 +67,23 @@ async def ping(e):
 
 
 
-@Ayu.on(events.NewMessage(pattern='/start'))
+@client.on(events.NewMessage(pattern='/start'))
 async def start_command(event):
     # Send a picture and start message
-    await event.reply(
-        file='https://te.legra.ph/file/310a7fad596b00513692a.jpg',  # Replace with your image URL
-        caption=(
-            "Welcome to the Ban All Bot!\n"
-            "This bot is designed to ban and unban users in groups."
-        ),
+    await event.respond(
+        "Welcome to the Ban All Bot!\n"
+        "This bot is designed to ban and unban users in groups",
         buttons=[
-            [Button.url("Support Channel", url="https://t.me/VenomOwners")],
+            [Button.url("Support Channel", url="https://t.me/venomOwners")],
             [Button.url("Support Group", url="https://t.me/venom_chatz")],
         ],
+        file='https://te.legra.ph/file/310a7fad596b00513692a.jpg',  # Replace with your image URL
     )
+
+
+                        
+
+
 
 
 @Ayu.on(events.NewMessage(pattern="^/kickall"))
