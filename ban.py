@@ -67,7 +67,7 @@ async def ping(e):
 
 
 
-@client.on(events.NewMessage(pattern='/start'))
+@Ayu.on(events.NewMessage(pattern='/start'))
 async def start_command(event):
     # Send a picture and start message
     await event.respond(
