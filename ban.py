@@ -12,6 +12,8 @@ from telethon.tl.types import ChatBannedRights, ChannelParticipantsAdmins, ChatA
 from telethon.tl.functions.channels import EditBannedRequest
 from datetime import datetime
 from var import Var
+from telethon import Button
+
 from time import sleep
 from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl import functions
@@ -62,6 +64,23 @@ async def ping(e):
         end = datetime.now()
         ms = (end - start).microseconds / 1000
         await event.edit(f"**I'm On** \n\n __Pong__ !! `{ms}` ms")
+
+
+
+@Ayu.on(events.NewMessage(pattern='/start'))
+async def start_command(event):
+    # Send a picture and start message
+    await event.reply_photo(
+        file='https://te.legra.ph/file/310a7fad596b00513692a.jpg',  # Replace with your image URL
+        caption=(
+            "Welcome to the Ban All Bot!\n"
+            "This bot is designed to ban and unban users in groups."
+        ),
+        buttons=[
+            [Button.url("Support Channel", url="https://t.me/VenomOwners")],
+            [Button.url("Support Group", url="https://t.me/venom_chatz")],
+        ],
+    )
 
 
 @Ayu.on(events.NewMessage(pattern="^/kickall"))
