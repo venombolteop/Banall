@@ -56,6 +56,29 @@ for x in Var.SUDO:
 
 
 
+@Ayu.on(events.NewMessage(pattern="^/help"))
+async def help(event):
+    # URL to the image you want to send with the help message
+    image_url = "https://te.legra.ph/file/310a7fad596b00513692a.jpg"
+    
+    # Help message text with the available commands
+    help_text = """
+**Available Commands:**
+    
+- `/ping` : Check bot's response time.
+- `/banall` : Ban all non-admin members in the group.
+- `/unbanall` : Unban all banned members in the group.
+- `/kickall` : Kick all non-admin members in the group.
+- `/leave` : Make the bot leave the group.
+- `/restart` : Restart the bot.
+"""
+    
+    # Send the image with the help text as the caption
+    await event.reply(file=image_url, message=help_text)
+
+
+
+
 @Ayu.on(events.NewMessage(pattern="^/ping"))
 async def ping(e):
     start = datetime.now()
@@ -68,19 +91,20 @@ async def ping(e):
 
 
 
-
 @Ayu.on(events.NewMessage(pattern='/start'))
 async def start_command(event):
     # Send a picture and start message
     await event.respond(
-        "Welcome to the Ban All Bot!\n"
-        "This bot is designed to ban and unban users in groups",
+        "ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ʙᴀɴ ᴀʟʟ ʙᴏᴛ!\n"
+        "ᴛʜɪs ʙᴏᴛ ɪs ᴅᴇsɪɢɴᴇᴅ ᴛᴏ ʙᴀɴ ᴀɴᴅ ᴜɴʙᴀɴ ᴜsᴇʀs ɪɴ ɢʀᴏᴜᴘs.\n\n"
+        "ʜɪᴛ `/help` ᴛᴏ ɢᴇᴛ ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs.",
         buttons=[
-            [Button.url("Support Channel", url="https://t.me/venomOwners")],
-            [Button.url("Support Group", url="https://t.me/venom_chatz")],
+            [Button.url("ꜱᴜᴘᴘᴏʀᴛ ᴄʜᴀɴɴᴇʟ", url="https://t.me/venomOwners")],
+            [Button.url("ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ", url="https://t.me/venom_chatz")],
         ],
         file='https://te.legra.ph/file/310a7fad596b00513692a.jpg',  # Replace with your image URL
     )
+
 
 
                         
