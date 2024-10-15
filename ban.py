@@ -187,31 +187,28 @@ async def banall(event):
 
 
 
-
 @Ayu.on(events.NewMessage(pattern="^/unbanall"))
 async def unban(event):
-    if not event.is_group:
-        reply = "ɴᴏᴏʙ !! ᴜsᴇ ᴛʜɪs ᴄᴍᴅ ɪɴ ɢʀᴏᴜᴘ."
-        return await event.reply(reply)
+        if not event.is_group:
+            Reply = f"Nᴏᴏʙ !! Usᴇ Tʜɪs Cᴍᴅ Iɴ Gʀᴏᴜᴘ."
+            await event.reply(Reply)
+        else:
+            msg = await event.reply("Sᴇᴀʀᴄʜɪɴɢ Pᴀʀᴛɪᴄɪᴘᴀɴᴛ Lɪsᴛs.")
+            p = 0
+            async for i in event.client.iter_participants(event.chat_id, filter=ChannelParticipantsKicked, aggressive=True):
+                rights = ChatBannedRights(until_date=0, view_messages=False)
+                try:
+                    await event.client(functions.channels.EditBannedRequest(event.chat_id, i, rights))
+                except FloodWaitError as ex:
+                    print(f"sleeping for {ex.seconds} seconds")
+                    sleep(ex.seconds)
+                except Exception as ex:
+                    await msg.edit(str(ex))
+                else:
+                    p += 1
+            await msg.edit("{}: {} unbanned".format(event.chat_id, p))
 
-    await event.delete()
 
-    # Get the sender's status in the group
-    
-    msg = await event.reply("sᴇᴀʀᴄʜɪɴɢ ᴘᴀʀᴛɪᴄɪᴘᴀɴᴛ ʟɪsᴛs.")
-    p = 0
-    async for i in event.client.iter_participants(event.chat_id, filter=ChannelParticipantsKicked, aggressive=True):
-        rights = ChatBannedRights(until_date=0, view_messages=True)  # Allow view messages when unbanning
-        try:
-            await event.client(functions.channels.EditBannedRequest(event.chat_id, i, rights))
-            p += 1
-        except FloodWaitError as ex:
-            print(f"sʟᴇᴇᴘɪɴɢ ғᴏʀ {ex.seconds} sᴇᴄᴏɴᴅs")
-            await asyncio.sleep(ex.seconds)  # Use asyncio.sleep instead of sleep for async code
-        except Exception as ex:
-            await msg.edit(f"Error unbanning {i.id}: {str(ex)}")
-
-    await msg.edit(f"{p} ᴜɴʙᴀɴɴᴇᴅ ɪɴ {event.chat_id}.")
 
 
 
