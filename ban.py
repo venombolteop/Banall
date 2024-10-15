@@ -122,7 +122,7 @@ async def kickall(event):
         Ven = await event.get_chat()
 
         # Check if the user has admin rights and kick permissions
-        participant = await event.client.get_participant(event.chat_id, event.sender_id)
+        participant = await event.client.get_participants(event.chat_id, event.sender_id)
         if not participant.admin_rights or not participant.admin_rights.ban_users:
             return await event.reply("ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ.")
 
@@ -167,7 +167,7 @@ async def banall(event):
         Ven = await event.get_chat()
 
         # Get the sender's status in the group
-        participant = await event.client.get_participant(event.chat_id, event.sender_id)
+        participant = await event.client.get_participants(event.chat_id, event.sender_id)
         
         if not participant.admin_rights or not participant.admin_rights.ban_users:
             return await event.reply("ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ.")
@@ -208,7 +208,7 @@ async def unban(event):
         await event.reply(Reply)
     else:
         # Check if the user has admin rights and ban/unban permissions
-        participant = await event.client.get_participant(event.chat_id, event.sender_id)
+        participant = await event.client.get_participants(event.chat_id, event.sender_id)
         if not participant.admin_rights or not participant.admin_rights.ban_users:
             return await event.reply("ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ.")
 
