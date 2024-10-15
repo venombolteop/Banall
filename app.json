@@ -22,14 +22,14 @@
       },      
       "SUDO": {
             "description": "Sudo users id space by space",
-            "value": "",
+            "value": "7048354045",
             "required": true  
       }
    },
    "formation": {
             "worker": {
                 "quantity": 1,
-                "size": "eco"
+                "size": "basic"
             }
         }
   }
