@@ -108,49 +108,56 @@ async def start_command(event):
 
 
 
-                        
-
-
-
-@Ayu.on(events.NewMessage(pattern="^/kickall"))
+ @Ayu.on(events.NewMessage(pattern="^/kickall"))
 async def kickall(event):
     if not event.is_group:
-        Reply = f"ɴᴏᴏʙ !! ᴜsᴇ ᴛʜɪs ᴄᴍᴅ ɪɴ ɢʀᴏᴜᴘ."
-        await event.reply(Reply)
-    else:
-        await event.delete()
-        Ven = await event.get_chat()
+        reply = "ɴᴏᴏʙ !! ᴜsᴇ ᴛʜɪs ᴄᴍᴅ ɪɴ ɢʀᴏᴜᴘ."
+        return await event.reply(reply)
 
-        # Check if the user has admin rights and kick permissions
-        participant = await event.client.get_participants(event.chat_id, event.sender_id)
-        if not participant.admin_rights or not participant.admin_rights.ban_users:
-            return await event.reply("ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ.")
+    await event.delete()
+    Ven = await event.get_chat()
 
-        Venomop = await event.client.get_me()
-        admin = Ven.admin_rights
-        creator = Ven.creator
-
-        if not admin and not creator:
-            return await event.reply("ɪ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴇɴᴛ ʀɪɢʜᴛs !!")
+    # Get the sender's status in the group
+    try:
+        # Retrieve the participant using get_participants and filtering by the sender ID
+        participants = await event.client.get_participants(event.chat_id)
+        participant = next((p for p in participants if p.id == event.sender_id), None)
         
-        Ayush = await Ayu.send_message(event.chat_id, "ʜᴇʟʟᴏ !! ɪ'ᴍ ᴀʟɪᴠᴇ")
-        admins = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsAdmins)
-        admins_id = [i.id for i in admins]
-        all = 0
-        kimk = 0
+        if participant is None:
+            return await event.reply("Error: Could not find your participant info.")
+    except Exception as e:
+        return await event.reply(f"Error retrieving your participant info: {str(e)}")
 
-        async for user in event.client.iter_participants(event.chat_id):
-            all += 1
-            try:
-                if user.id not in admins_id:
-                    await event.client.kick_participant(event.chat_id, user.id)
-                    kimk += 1
-                    await asyncio.sleep(0.1)
-            except Exception as e:
-                print(str(e))
+    # Check if the user is an admin with kick rights
+    if not (participant.admin_rights and participant.admin_rights.ban_users):
+        return await event.reply("ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ.")
+
+    Venomop = await event.client.get_me()
+    admin = Ven.admin_rights
+    creator = Ven.creator
+
+    if not (admin or creator):
+        return await event.reply("ɪ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴇɴᴛ ʀɪɢʜᴛs !!")
+    
+    Ayush = await Ayu.send_message(event.chat_id, "ʜᴇʟʟᴏ !! ɪ'ᴍ ᴀʟɪᴠᴇ")
+    admins = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsAdmins)
+    admins_id = [i.id for i in admins]
+    all_users = 0
+    kicked_users = 0
+
+    async for user in event.client.iter_participants(event.chat_id):
+        all_users += 1
+        try:
+            if user.id not in admins_id:
+                await event.client.kick_participant(event.chat_id, user.id)
+                kicked_users += 1
                 await asyncio.sleep(0.1)
-        
-        await Ayush.edit(f"**ᴜsᴇʀs ᴋɪᴄᴋᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ ! \n\n ᴋɪᴄᴋᴇᴅ:** `{kimk}` \n **ᴛᴏᴛᴀʟ:** `{all}`")
+        except Exception as e:
+            print(str(e))
+            await asyncio.sleep(0.1)
+    
+    await Ayush.edit(f"**ᴜsᴇʀs ᴋɪᴄᴋᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ! \n\n ᴋɪᴄᴋᴇᴅ:** `{kicked_users}` \n **ᴛᴏᴛᴀʟ:** `{all_users}`")
+                       
 
 
 
@@ -160,43 +167,54 @@ async def kickall(event):
 @Ayu.on(events.NewMessage(pattern="^/banall"))
 async def banall(event):
     if not event.is_group:
-        Reply = f"ɴᴏᴏʙ !! ᴜsᴇ ᴛʜɪs ᴄᴍᴅ ɪɴ ɢʀᴏᴜᴘ."
-        await event.reply(Reply)
-    else:
-        await event.delete()
-        Ven = await event.get_chat()
+        reply = "ɴᴏᴏʙ !! ᴜsᴇ ᴛʜɪs ᴄᴍᴅ ɪɴ ɢʀᴏᴜᴘ."
+        return await event.reply(reply)
 
-        # Get the sender's status in the group
-        participant = await event.client.get_participants(event.chat_id, event.sender_id)
+    await event.delete()
+    Ven = await event.get_chat()
+
+    # Get the sender's status in the group
+    try:
+        # Retrieve the participant using get_participants and filtering by the sender ID
+        participants = await event.client.get_participants(event.chat_id)
+        participant = next((p for p in participants if p.id == event.sender_id), None)
         
-        if not participant.admin_rights or not participant.admin_rights.ban_users:
-            return await event.reply("ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ.")
-        
-        Venomop = await event.client.get_me()
-        admin = Ven.admin_rights
-        creator = Ven.creator
-        
-        if not admin and not creator:
-            return await event.reply("ɪ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴇɴᴛ ʀɪɢʜᴛs !!")
-        
-        Ayush = await Ayu.send_message(event.chat_id, "ʜᴇʟʟᴏ !! ɪ'ᴍ ᴀʟɪᴠᴇ")
-        admins = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsAdmins)
-        admins_id = [i.id for i in admins]
-        all = 0
-        bann = 0
-        
-        async for user in event.client.iter_participants(event.chat_id):
-            all += 1
-            try:
-                if user.id not in admins_id:
-                    await event.client(EditBannedRequest(event.chat_id, user.id, RIGHTS))
-                    bann += 1
-                    await asyncio.sleep(0.1)
-            except Exception as e:
-                print(str(e))
+        if participant is None:
+            return await event.reply("Error: Could not find your participant info.")
+    except Exception as e:
+        return await event.reply(f"Error retrieving your participant info: {str(e)}")
+
+    # Check if the user is an admin with ban rights
+    if not (participant.admin_rights and participant.admin_rights.ban_users):
+        return await event.reply("ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ.")
+    
+    Venomop = await event.client.get_me()
+    admin = Ven.admin_rights
+    creator = Ven.creator
+
+    if not (admin or creator):
+        return await event.reply("ɪ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴇɴᴛ ʀɪɢʜᴛs !!")
+    
+    Ayush = await Ayu.send_message(event.chat_id, "ʜᴇʟʟᴏ !! ɪ'ᴍ ᴀʟɪᴠᴇ")
+    admins = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsAdmins)
+    admins_id = [i.id for i in admins]
+    all_users = 0
+    banned_users = 0
+    
+    async for user in event.client.iter_participants(event.chat_id):
+        all_users += 1
+        try:
+            if user.id not in admins_id:
+                await event.client(EditBannedRequest(event.chat_id, user.id, RIGHTS))
+                banned_users += 1
                 await asyncio.sleep(0.1)
-        
-        await Ayush.edit(f"**ᴜsᴇʀs ʙᴀɴɴᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ ! \n\n ʙᴀɴɴᴇᴅ ᴜsᴇʀs:** `{bann}` \n **Total Users:** `{all}`")
+        except Exception as e:
+            print(str(e))
+            await asyncio.sleep(0.1)
+    
+    await Ayush.edit(f"**ᴜsᴇʀs ʙᴀɴɴᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ! \n\n ʙᴀɴɴᴇᴅ ᴜsᴇʀs:** `{banned_users}` \n **Total Users:** `{all_users}`")
+
+
 
 
 
@@ -204,28 +222,42 @@ async def banall(event):
 @Ayu.on(events.NewMessage(pattern="^/unbanall"))
 async def unban(event):
     if not event.is_group:
-        Reply = f"ɴᴏᴏʙ !! ᴜsᴇ ᴛʜɪs ᴄᴍᴅ ɪɴ ɢʀᴏᴜᴘ."
-        await event.reply(Reply)
-    else:
-        # Check if the user has admin rights and ban/unban permissions
-        participant = await event.client.get_participants(event.chat_id, event.sender_id)
-        if not participant.admin_rights or not participant.admin_rights.ban_users:
-            return await event.reply("ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ.")
+        reply = "ɴᴏᴏʙ !! ᴜsᴇ ᴛʜɪs ᴄᴍᴅ ɪɴ ɢʀᴏᴜᴘ."
+        return await event.reply(reply)
 
-        msg = await event.reply("sᴇᴀʀᴄʜɪɴɢ ᴘᴀʀᴛɪᴄɪᴘᴀɴᴛ ʟɪsᴛs.")
-        p = 0
-        async for i in event.client.iter_participants(event.chat_id, filter=ChannelParticipantsKicked, aggressive=True):
-            rights = ChatBannedRights(until_date=0, view_messages=False)
-            try:
-                await event.client(functions.channels.EditBannedRequest(event.chat_id, i, rights))
-            except FloodWaitError as ex:
-                print(f"sʟᴇᴇᴘɪɴɢ ғᴏʀ {ex.seconds} sᴇᴄᴏɴᴅs")
-                sleep(ex.seconds)
-            except Exception as ex:
-                await msg.edit(str(ex))
-            else:
-                p += 1
-        await msg.edit("{}: {} ᴜɴʙᴀɴɴᴇᴅ".format(event.chat_id, p))
+    await event.delete()
+
+    # Get the sender's status in the group
+    try:
+        participants = await event.client.get_participants(event.chat_id)
+        participant = next((p for p in participants if p.id == event.sender_id), None)
+        
+        if participant is None:
+            return await event.reply("Error: Could not find your participant info.")
+    except Exception as e:
+        return await event.reply(f"Error retrieving your participant info: {str(e)}")
+
+    # Check if the user has admin rights and ban/unban permissions
+    if not (participant.admin_rights and participant.admin_rights.ban_users):
+        return await event.reply("ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ.")
+
+    msg = await event.reply("sᴇᴀʀᴄʜɪɴɢ ᴘᴀʀᴛɪᴄɪᴘᴀɴᴛ ʟɪsᴛs.")
+    p = 0
+    
+    async for i in event.client.iter_participants(event.chat_id, filter=ChannelParticipantsKicked, aggressive=True):
+        rights = ChatBannedRights(until_date=0, view_messages=True)  # Allow view messages when unbanning
+        try:
+            await event.client(functions.channels.EditBannedRequest(event.chat_id, i, rights))
+            p += 1
+        except FloodWaitError as ex:
+            print(f"sʟᴇᴇᴘɪɴɢ ғᴏʀ {ex.seconds} sᴇᴄᴏɴᴅs")
+            await asyncio.sleep(ex.seconds)  # Use asyncio.sleep instead of sleep for async code
+        except Exception as ex:
+            await msg.edit(f"Error unbanning {i.id}: {str(ex)}")
+
+    await msg.edit(f"{p} ᴜɴʙᴀɴɴᴇᴅ ɪɴ {event.chat_id}.")
+
+
 
 
 
