@@ -1,6 +1,6 @@
 # Ban All Bot
 
-- This is a Sudo Based Members Banning Bot 
+- This is a Admin Based Members Banning Bot 
  
 # Commands
 - ping
