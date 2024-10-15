@@ -1,3 +1,6 @@
+import logging
+import re
+
 import os
 import sys
 import asyncio
