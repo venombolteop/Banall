@@ -108,7 +108,7 @@ async def start_command(event):
 
 
 
- @Ayu.on(events.NewMessage(pattern="^/kickall"))
+@Ayu.on(events.NewMessage(pattern="^/kickall"))
 async def kickall(event):
     if not event.is_group:
         reply = "ɴᴏᴏʙ !! ᴜsᴇ ᴛʜɪs ᴄᴍᴅ ɪɴ ɢʀᴏᴜᴘ."
