@@ -63,14 +63,14 @@ async def help(event):
     
     # Help message text with the available commands
     help_text = """
-**Available Commands:**
+ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅs:
     
-- `/ping` : Check bot's response time.
-- `/banall` : Ban all non-admin members in the group.
-- `/unbanall` : Unban all banned members in the group.
-- `/kickall` : Kick all non-admin members in the group.
-- `/leave` : Make the bot leave the group.
-- `/restart` : Restart the bot.
+- `/ping` : ᴄʜᴇᴄᴋ's ʙᴏᴛ's ʀᴇsᴘᴏɴsᴇ ᴛɪᴍᴇ.
+- `/banall` : ʙᴀɴ ᴀʟʟ ɴᴏɴ-ᴀᴅᴍɪɴ ᴍᴇᴍʙᴇʀs ɪɴ ᴛʜᴇ ɢʀᴏᴜᴘ.
+- `/unbanall` : ᴜɴʙᴀɴ ᴀʟʟ ʙᴀɴɴᴇᴅ ᴍᴇᴍʙᴇʀs ɪɴ ᴛʜᴇ ɢʀᴏᴜᴘ.
+- `/kickall` : ᴋɪᴄᴋ ᴀʟʟ ɴᴏɴ-ᴀᴅᴍɪɴ ᴍᴇᴍʙᴇʀs ɪɴ ᴛʜᴇ ɢʀᴏᴜᴘ.
+- `/leave` : ᴍᴀᴋᴇ ᴛʜᴇ ʙᴏᴛ ʟᴇᴀᴠᴇ ᴛʜᴇ ɢʀᴏᴜᴘ [ᴏɴʟʏ sᴜᴅᴏ].
+- `/restart` : ʀᴇsᴛᴀʀᴛ ᴛʜᴇ ʙᴏᴛ [ᴏɴʟʏ sᴜᴅᴏ].
 """
     
     # Send the image with the help text as the caption
@@ -86,7 +86,7 @@ async def ping(e):
     event = await e.reply(text, parse_mode=None, link_preview=None)
     end = datetime.now()
     ms = (end - start).microseconds / 1000
-    await event.edit(f"**I'm On** \n\n __Pong__ !! `{ms}` ms")
+    await event.edit(f"ɪ'ᴍ ᴏɴ \n\n ᴘᴏɴɢ !! `{ms}` ms")
 
 
 
@@ -114,7 +114,7 @@ async def start_command(event):
 @Ayu.on(events.NewMessage(pattern="^/kickall"))
 async def kickall(event):
     if not event.is_group:
-        Reply = f"Noob !! Use This Cmd in Group."
+        Reply = f"ɴᴏᴏʙ !! ᴜsᴇ ᴛʜɪs ᴄᴍᴅ ɪɴ ɢʀᴏᴜᴘ."
         await event.reply(Reply)
     else:
         await event.delete()
@@ -123,16 +123,16 @@ async def kickall(event):
         # Check if the user has admin rights and kick permissions
         participant = await event.client.get_participant(event.chat_id, event.sender_id)
         if not participant.admin_rights or not participant.admin_rights.ban_users:
-            return await event.reply("You need to be an admin with ban rights to use this command.")
+            return await event.reply("ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ.")
 
         Venomop = await event.client.get_me()
         admin = Ven.admin_rights
         creator = Ven.creator
 
         if not admin and not creator:
-            return await event.reply("I Don't have sufficient Rights !!")
+            return await event.reply("ɪ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴇɴᴛ ʀɪɢʜᴛs !!")
         
-        Ayush = await Ayu.send_message(event.chat_id, "**Hello !! I'm Alive**")
+        Ayush = await Ayu.send_message(event.chat_id, "ʜᴇʟʟᴏ !! ɪ'ᴍ ᴀʟɪᴠᴇ")
         admins = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsAdmins)
         admins_id = [i.id for i in admins]
         all = 0
@@ -149,7 +149,7 @@ async def kickall(event):
                 print(str(e))
                 await asyncio.sleep(0.1)
         
-        await Ayush.edit(f"**Users Kicked Successfully ! \n\n Kicked:** `{kimk}` \n **Total:** `{all}`")
+        await Ayush.edit(f"**ᴜsᴇʀs ᴋɪᴄᴋᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ ! \n\n ᴋɪᴄᴋᴇᴅ:** `{kimk}` \n **ᴛᴏᴛᴀʟ:** `{all}`")
 
 
 
@@ -159,7 +159,7 @@ async def kickall(event):
 @Ayu.on(events.NewMessage(pattern="^/banall"))
 async def banall(event):
     if not event.is_group:
-        Reply = f"Noob !! Use This Cmd in Group."
+        Reply = f"ɴᴏᴏʙ !! ᴜsᴇ ᴛʜɪs ᴄᴍᴅ ɪɴ ɢʀᴏᴜᴘ."
         await event.reply(Reply)
     else:
         await event.delete()
@@ -169,16 +169,16 @@ async def banall(event):
         participant = await event.client.get_participant(event.chat_id, event.sender_id)
         
         if not participant.admin_rights or not participant.admin_rights.ban_users:
-            return await event.reply("You need to be an admin with ban rights to use this command.")
+            return await event.reply("ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ.")
         
         Venomop = await event.client.get_me()
         admin = Ven.admin_rights
         creator = Ven.creator
         
         if not admin and not creator:
-            return await event.reply("I Don't have sufficient Rights !!")
+            return await event.reply("ɪ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴇɴᴛ ʀɪɢʜᴛs !!")
         
-        Ayush = await Ayu.send_message(event.chat_id, "**Hello !! I'm Alive**")
+        Ayush = await Ayu.send_message(event.chat_id, "ʜᴇʟʟᴏ !! ɪ'ᴍ ᴀʟɪᴠᴇ")
         admins = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsAdmins)
         admins_id = [i.id for i in admins]
         all = 0
@@ -195,7 +195,7 @@ async def banall(event):
                 print(str(e))
                 await asyncio.sleep(0.1)
         
-        await Ayush.edit(f"**Users Banned Successfully ! \n\n Banned Users:** `{bann}` \n **Total Users:** `{all}`")
+        await Ayush.edit(f"**ᴜsᴇʀs ʙᴀɴɴᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ ! \n\n ʙᴀɴɴᴇᴅ ᴜsᴇʀs:** `{bann}` \n **Total Users:** `{all}`")
 
 
 
@@ -203,28 +203,28 @@ async def banall(event):
 @Ayu.on(events.NewMessage(pattern="^/unbanall"))
 async def unban(event):
     if not event.is_group:
-        Reply = f"Noob !! Use This Cmd in Group."
+        Reply = f"ɴᴏᴏʙ !! ᴜsᴇ ᴛʜɪs ᴄᴍᴅ ɪɴ ɢʀᴏᴜᴘ."
         await event.reply(Reply)
     else:
         # Check if the user has admin rights and ban/unban permissions
         participant = await event.client.get_participant(event.chat_id, event.sender_id)
         if not participant.admin_rights or not participant.admin_rights.ban_users:
-            return await event.reply("You need to be an admin with ban rights to use this command.")
+            return await event.reply("ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ.")
 
-        msg = await event.reply("Searching Participant Lists.")
+        msg = await event.reply("sᴇᴀʀᴄʜɪɴɢ ᴘᴀʀᴛɪᴄɪᴘᴀɴᴛ ʟɪsᴛs.")
         p = 0
         async for i in event.client.iter_participants(event.chat_id, filter=ChannelParticipantsKicked, aggressive=True):
             rights = ChatBannedRights(until_date=0, view_messages=False)
             try:
                 await event.client(functions.channels.EditBannedRequest(event.chat_id, i, rights))
             except FloodWaitError as ex:
-                print(f"sleeping for {ex.seconds} seconds")
+                print(f"sʟᴇᴇᴘɪɴɢ ғᴏʀ {ex.seconds} sᴇᴄᴏɴᴅs")
                 sleep(ex.seconds)
             except Exception as ex:
                 await msg.edit(str(ex))
             else:
                 p += 1
-        await msg.edit("{}: {} unbanned".format(event.chat_id, p))
+        await msg.edit("{}: {} ᴜɴʙᴀɴɴᴇᴅ".format(event.chat_id, p))
 
 
 
@@ -239,11 +239,11 @@ async def _(e):
         if len(e.text) > 7:
             bc = venom[0]
             bc = int(bc)
-            text = "Leaving....."
+            text = "ʟᴇᴀᴠɪɴɢ....."
             event = await e.reply(text, parse_mode=None, link_preview=None)
             try:
                 await event.client(LeaveChannelRequest(bc))
-                await event.edit("Successfully Left")
+                await event.edit("sᴜᴄᴄᴇssғᴜʟʟʏ ʟᴇғᴛ")
             except Exception as e:
                 await event.edit(str(e))
         else:
@@ -252,7 +252,7 @@ async def _(e):
             event = await e.reply(text, parse_mode=None, link_preview=None)
             try:
                 await event.client(LeaveChannelRequest(bc))
-                await event.edit("Successfully Left")
+                await event.edit("sᴜᴄᴄᴇssғᴜʟʟʏ ʟᴇғᴛ")
             except Exception as e:
                 await event.edit(str(e))
 
@@ -260,7 +260,7 @@ async def _(e):
 @Ayu.on(events.NewMessage(pattern="^/restart"))
 async def restart(e):
     if e.sender_id in SUDO_USERS:
-        text = "__Restarting__ !!!"
+        text = "__ʀᴇsᴛᴀʀᴛɪɴɢ__ !!!"
         await e.reply(text, parse_mode=None, link_preview=None)
         try:
             await Ayu.disconnect()
